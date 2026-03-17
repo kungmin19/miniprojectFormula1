@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 mt-5">
+            <div class="card-body p-4">
+                <h3 class="text-center mb-4">🔑 เข้าสู่ระบบ</h3>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">ชื่อผู้ใช้ (Username)</label>
+                        <input type="text" name="username" class="form-control" required placeholder="กรอกชื่อผู้ใช้">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">รหัสผ่าน (Password)</label>
+                        <input type="password" name="password" class="form-control" required placeholder="กรอกรหัสผ่าน">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 fw-bold py-2">เข้าสู่ระบบ</button>
+                </form>
+                <div class="text-center mt-3">
+                    <small>ยังไม่มีบัญชี? <a href="{{ url_for('core.register') }}">สมัครสมาชิกที่นี่</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

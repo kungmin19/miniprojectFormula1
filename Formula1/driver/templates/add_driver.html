@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-header bg-success text-white py-3">
+                <h4 class="mb-0">➕ เพิ่มข้อมูลนักแข่งใหม่</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-bold">ชื่อนักแข่ง</label>
+                            <input type="text" name="name" class="form-control" placeholder="เช่น Max Verstappen" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">ทีม (Team)</label>
+                            <input type="text" name="team" class="form-control" placeholder="เช่น Red Bull Racing" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">หมายเลขนักแข่ง</label>
+                            <input type="number" name="driver_number" class="form-control" placeholder="เช่น 1">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">สัญชาติ</label>
+                            <input type="text" name="nationality" class="form-control" placeholder="เช่น Netherlands">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">คะแนนสะสมเริ่มต้น</label>
+                            <input type="number" name="points" class="form-control" value="0">
+                        </div>
+
+                        <div class="col-md-12 mb-4">
+                            <label class="form-label fw-bold">URL รูปภาพนักแข่ง</label>
+                            <input type="text" name="image_url" class="form-control" placeholder="วางลิงก์รูปภาพที่นี่">
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success px-4 py-2 fw-bold">บันทึกข้อมูล</button>
+                        <a href="{{ url_for('driver.index') }}" class="btn btn-outline-secondary px-4 py-2">ยกเลิก</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
