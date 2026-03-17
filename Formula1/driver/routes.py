@@ -2,41 +2,41 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from Formula1.models import db, Driver
 
-# สร้าง Blueprint สำหรับส่วนของนักแข่ง
+
 driver = Blueprint('driver', __name__, url_prefix='/driver', template_folder='templates')
 
-# --- 1. หน้าแสดงรายชื่อนักแข่ง (พร้อมระบบ Search) ---
+
 @driver.route('/')
 def index():
-    # รับค่าจากช่องค้นหา (ส่งมาแบบ GET method)
+    
     search_query = request.args.get('search', '')
     
     if search_query:
-        # ค้นหาชื่อนักแข่ง หรือ ชื่อทีม ที่มีคำที่พิมพ์ค้นหาอยู่ (Case-insensitive ในบาง DB)
+        
         drivers = Driver.query.filter(
             (Driver.name.like(f'%{search_query}%')) | 
             (Driver.team.like(f'%{search_query}%'))
         ).all()
     else:
-        # ถ้าไม่มีการค้นหา ให้แสดงนักแข่งทั้งหมด
+        
         drivers = Driver.query.all()
         
     return render_template('driver_list.html', drivers=drivers, search_query=search_query)
 
-# --- 2. หน้าเพิ่มนักแข่งใหม่ ---
+
 @driver.route('/add', methods=['GET', 'POST'])
-@login_required # ต้องล็อกอินก่อนถึงจะเพิ่มได้
+@login_required 
 def add():
     if request.method == 'POST':
-        # รับข้อมูลจากฟอร์ม
+        
         name = request.form.get('name')
         team = request.form.get('team')
         nationality = request.form.get('nationality')
         driver_number = request.form.get('driver_number')
-        points = request.form.get('points', 0) # ถ้าไม่กรอกให้เป็น 0
+        points = request.form.get('points', 0) 
         image_url = request.form.get('image_url')
         
-        # สร้าง Object นักแข่งใหม่
+        
         new_driver = Driver(
             name=name,
             team=team,
@@ -44,7 +44,7 @@ def add():
             driver_number=driver_number,
             points=points,
             image_url=image_url,
-            user_id=current_user.id # เก็บว่าใครเป็นคนเพิ่มข้อมูลนี้
+            user_id=current_user.id 
         )
         
         try:
@@ -58,15 +58,15 @@ def add():
             
     return render_template('add_driver.html')
 
-# --- 3. หน้าแก้ไขข้อมูลนักแข่ง ---
+
 @driver.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit(id):
-    # ดึงข้อมูลนักแข่งตาม ID ถ้าไม่เจอจะขึ้น 404
+    
     d = Driver.query.get_or_404(id)
     
     if request.method == 'POST':
-        # อัปเดตข้อมูลตามที่กรอกมาใหม่
+        
         d.name = request.form.get('name')
         d.team = request.form.get('team')
         d.nationality = request.form.get('nationality')
@@ -84,7 +84,7 @@ def edit(id):
             
     return render_template('edit_driver.html', driver=d)
 
-# --- 4. ระบบลบข้อมูลนักแข่ง ---
+
 @driver.route('/delete/<int:id>')
 @login_required
 def delete(id):
